@@ -9,7 +9,7 @@ import time, json
 class nifty50(object):
 
     def __init__(self):
-        self.objRedis = redis.StrictRedis(host='192.168.0.103', port=6379, db=0)
+        self.objRedis = redis.StrictRedis(host='127.0.0.1', port=6379, db=0)
         self.browser = webdriver.PhantomJS()
         Monitor(cherrypy.engine, self.scrape_data, frequency=300).subscribe()
 
