@@ -1,2 +1,2 @@
-web: gunicorn server --log-file -
+web: python server.py
 
