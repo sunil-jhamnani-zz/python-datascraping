@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Scrapping</title>
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css" crossorigin="anonymous">
+    <script src="/static/js/jquery-3.1.1.min.js"></script>
+    <script src="/static/js/bootstrap/bootstrap.min.js" crossorigin="anonymous"></script>
+
+</head>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var addToHtml = function(data, element) {
+            $(data).each(function (index,elem) {
+                if(index % 2)
+                    var new_div = $("<div>", {"class": "col-sm-3 odd card card-block"});
+                else
+                    var new_div = $("<div>", {"class": "col-sm-3 even card card-block"});
+                for (var key in elem) {
+                    new_div.append('<p class="card-text"><b>'+key+': </b>'+elem[key]+'</p>')
+                }
+                element.append(new_div)
+            });
+        }
+        $.get("/gainerdata", function (data) {
+            debugger;
+            data = JSON.parse(data)
+            addToHtml(data, $('#top_gainers'))
+        });
+        $.get("/loserdata", function (data) {
+            debugger;
+            data = JSON.parse(data)
+            addToHtml(data, $('#top_losers'))
+        });
+        setTimeout(function(){
+            window.location.reload(1);
+        }, 30000);
+    });
+
+</script>
+<style>
+    .card-block {
+        padding: 1.25rem;
+        margin-right: .75rem;
+    }
+    .odd {
+        background-color: burlywood;
+    }
+    .even {
+        background-color: coral;
+    }
+</style>
+<body>
+<div class="card">
+    <div class="page-header text-center">
+        <h1>Top Gainers</h1>
+    </div>
+    <div class="container" id="top_gainers">
+    </div>
+
+    <div class="page-header">
+        <h1>Top Loosers</h1>
+    </div>
+    <div class="container" id="top_losers">
+    </div>
+</div>
+</body>
+</html>
